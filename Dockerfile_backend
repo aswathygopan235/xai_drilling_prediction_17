@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+WORKDIR /app
+
+RUN mkdir -p -v src
+
+WORKDIR /app/src
+
+COPY src/backend ./backend
+COPY src/models ./models
+
+WORKDIR /app
+
+COPY src/backend/requirements.txt .
+RUN pip install -r  requirements.txt --no-cache-dir
+RUN pip freeze > requirements.txt
+
+CMD uvicorn src.backend.api:app --host 0.0.0.0 --port 8000
