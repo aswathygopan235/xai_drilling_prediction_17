@@ -33,19 +33,18 @@ def plot_pie(feature):
 
 
 def table():
-
     st.dataframe(df, key="table_data")
 
 
 def main():
     table()
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     with col1:
         plot_pie("Main Failure")
     with col2:
         plot_pie("BEF")
 
-    col3, col4 = st.columns(2)
+    col3, col4, col6 = st.columns(3)
     with col3:
         plot_pie("CCF")
     with col4:

@@ -1,7 +1,8 @@
+from streamlit_extras.chartjs_chart import *
+import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
-from streamlit_extras.chartjs_chart import *
+st.set_page_config(layout="wide")
 
 df = pd.read_csv("src/data/XAI_Drilling_Dataset.csv")
 
@@ -45,12 +46,12 @@ def navigation():
         st.Page("pages/page3.py", title="Page 3")
     ]
 
-    pg = st.navigation(pages)
+    pg = st.navigation(pages, position="top")
     pg.run()
 
 
 def footer():
-    st.caption("© 2026 My Company · All rights reserved")
+    st.caption("Aswathy Gopan Machine Learning Project XAI Drilling")
 
 
 def main():
