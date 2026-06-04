@@ -6,11 +6,11 @@
 
 #### OpenAPI
 
-[View docs here](https://xai-drilling-porfolio-17.onrender.com/docs)
+[View docs here](https://xai-drilling-prediction-17.onrender.com/docs)
 
 #### UI app
 
-[Try ui app here](https://xai-drilling-porfolio-17-git-963074352354.europe-west2.run.app/app)
+[Try ui app here](https://xai-drilling-prediction-deploy-ui-963074352354.europe-west2.run.app/app)
 
 ## Introduction
 
