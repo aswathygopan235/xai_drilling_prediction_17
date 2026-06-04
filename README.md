@@ -83,7 +83,9 @@ The table of output after label encoding
 
 A pipeline preprocesses the data so it can be used by the model
 
-[Click here to view detailed Pipeline setup](./fig.html)
+First pipeline stage encoded the categorical columns drill_bit_type and the material using [OneHotEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html). The rest of the fields is pass through. The estimator the pipeline is [Random forest classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+
+<!-- [Click here to view detailed Pipeline setup](./fig.html) -->
 
 ## Analysis
 
