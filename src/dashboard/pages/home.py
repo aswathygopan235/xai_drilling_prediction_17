@@ -1,9 +1,9 @@
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-from streamlit_extras.chartjs_chart import *
 
-df = pd.read_csv("src/data/XAI_Drilling_Dataset.csv")
+df = pd.read_csv(
+    "https://raw.githubusercontent.com/aswathygopan235/xai_drilling_porfolio_17/refs/heads/main/src/data/XAI_Drilling_Dataset.csv")
 
 
 def plot_pie(feature):
@@ -21,34 +21,37 @@ def plot_pie(feature):
 
     st.pyplot(fig1)
 
-    # st.write("### Pie Chart")
-    # spec = {
-    #     "type": "pie",
-    #     "data": {
-    #         "labels": labels,
-    #         "datasets": [{"data": sizes}],
-    #     },
-    # }
-    # chartjs_chart(spec)
+#     # st.write("### Pie Chart")
+#     # spec = {
+#     #     "type": "pie",
+#     #     "data": {
+#     #         "labels": labels,
+#     #         "datasets": [{"data": sizes}],
+#     #     },
+#     # }
+#     # chartjs_chart(spec)
 
 
 def table():
+    st.title("Data")
     st.dataframe(df, key="table_data")
 
 
 def main():
     table()
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        plot_pie("Main Failure")
-    with col2:
-        plot_pie("BEF")
+    with st.container():
+        st.title("Failure percent")
+        col1, col2, col3 = st.columns([1, 1, 3])
+        with col1:
+            plot_pie("Main Failure")
+        with col2:
+            plot_pie("BEF")
 
-    col3, col4, col6 = st.columns(3)
-    with col3:
-        plot_pie("CCF")
-    with col4:
-        plot_pie("FWF")
+        col3, col4, col6 = st.columns([1, 1, 3])
+        with col3:
+            plot_pie("CCF")
+        with col4:
+            plot_pie("FWF")
 
 
 if __name__ == "__main__":

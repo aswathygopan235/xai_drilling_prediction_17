@@ -34,16 +34,52 @@ def valid_cooling(value: int) -> int:
     return value
 
 
+def validate_cutting_speed(value: float):
+    if ((value >= 16) and (value <= 35)):
+        return value
+    raise ValueError("Cutting speed must be between 16 and 35")
+
+
+def validate_spindle_speed(value: int):
+    if ((value >= 400) and (value <= 830)):
+        return value
+    raise ValueError("Spindle speed must be between 400 and 830")
+
+
+def validate_feed(value: float):
+    if ((value >= .100) and (value <= .325)):
+        return value
+    raise ValueError("Feed value must be between .100 and .325")
+
+
+def validate_feed_rate(value: int):
+    if ((value >= 60) and (value <= 265)):
+        return value
+    raise ValueError("feed rate must be between 60 and 265")
+
+
+def validate_power(value: float):
+    if ((value >= 45) and (value <= 310)):
+        return value
+    raise ValueError("Power must be between 45 and 310")
+
+
+def validate_process_time(value: float):
+    if ((value >= 15) and (value <= 40)):
+        return value
+    raise ValueError("Process time must be between 15 and 40")
+
+
 class DrillMetric(BaseModel):
-    cutting_speed_vc: float
-    spindle_speed_n: int
-    feed_f: float
-    feed_rate_vf: int
-    power_pc: float
+    cutting_speed_vc: Annotated[float, BeforeValidator(validate_cutting_speed)]
+    spindle_speed_n: Annotated[int, BeforeValidator(validate_spindle_speed)]
+    feed_f: Annotated[float, BeforeValidator(validate_feed)]
+    feed_rate_vf: Annotated[int, BeforeValidator(validate_feed_rate)]
+    power_pc: Annotated[float, BeforeValidator(validate_power)]
     cooling: Annotated[int, BeforeValidator(valid_cooling)]
     material: Annotated[str, BeforeValidator(valid_material)]
     drill_bit_type: Annotated[str, BeforeValidator(valid_drill_bit)]
-    process_time: float
+    process_time: Annotated[float, BeforeValidator(validate_process_time)]
 
 
 app = FastAPI()
