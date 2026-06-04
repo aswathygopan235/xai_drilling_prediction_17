@@ -8,6 +8,10 @@
 
 [View docs here](https://xai-drilling-porfolio-17.onrender.com/docs)
 
+#### UI app
+
+[Try ui app here]([Streamlit](https://xai-drilling-porfolio-17-git-963074352354.europe-west2.run.app/app))
+
 ## Introduction
 
 This synthetic dataset simulates the drilling process and the failures modes associated with it. There are 20,000 records with 10 features associated with each datapoints. It records the parameters of the drilling procees and whether the process resulted in failure and the category of failure that occured.
