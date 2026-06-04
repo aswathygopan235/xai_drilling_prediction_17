@@ -2,33 +2,19 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 import requests
+import time
 
 
 st.set_page_config(layout="wide")
 load_dotenv()
-BASEURL = os.getenv('PREDICT_URL')
+PREDICT_URL = os.getenv('PREDICT_URL')
+DOCS_URL = os.getenv('DOCS_URL')
 
 
 @st.dialog("Result", dismissible=False, width="medium")
 def result_modal(res, inp):
     """modal to show result"""
     inp_col, out_col = st.columns([1, 2])
-    # with st.container():
-    # if res["success"] is False:
-    #     st.badge("Fail", icon=":material/cancel:", color="red")
-    #     err = construct_error_message(res)
-    #     st.write(err)
-
-    # else:
-    #     st.badge("Success", icon=":material/check:", color="green")
-
-    # mk = "| label          | value |"
-    # mk = mk+"| -------------- | ----- |"
-    # mk = mk+"| *main_failure* | "+str(inp['feed_f'])+"|"
-    # mk = mk+"| *bef*          | 0     |"
-    # mk = mk+"| *ccf*          | 1     |"
-    # mk = mk+"| *fwf*          | 0     |"
-    # mk = mk+"| *wdf*          | 0     |"
 
     input_mk = f'''
         ### Input
@@ -78,7 +64,7 @@ def construct_error_message(result):
 
 def call_api():
     """API called to predict price"""
-    url = BASEURL+"/predict"
+    url = PREDICT_URL+"/predict"
     inp = {
         "cutting_speed_vc": st.session_state["cutting_speed"],
         "spindle_speed_n": st.session_state["spindle_speed"],
@@ -90,8 +76,9 @@ def call_api():
         "drill_bit_type": st.session_state["drill_bit_type"],
         "process_time": st.session_state["process_time"],
     }
-
-    data = requests.post(url, json=inp, timeout=60).json()
+    with st.spinner("Calculating"):
+        data = requests.post(url, json=inp, timeout=60).json()
+        time.sleep(5)
 
     if (result_modal not in st.session_state):
         result_modal(data, inp)

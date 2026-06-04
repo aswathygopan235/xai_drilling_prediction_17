@@ -1,6 +1,13 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+DOCS_URL = os.getenv('DOCS_URL')
 st.set_page_config(layout="wide")
 
 st.html("""
@@ -55,7 +62,7 @@ def footer():
                 "https://github.com/aswathygopan235/xai_drilling_porfolio_17", label="Github")
         with col3:
             st.page_link(
-                "https://google.com", label="Docs")
+                DOCS_URL+"/docs", label="Docs")
         with col4:
             st.caption("Aswathy Gopan Machine Learning Project XAI Drilling")
 
