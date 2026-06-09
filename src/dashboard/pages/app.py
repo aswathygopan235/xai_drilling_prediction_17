@@ -62,6 +62,25 @@ def construct_error_message(result):
     return msg
 
 
+def initial_wake():
+
+    if ("loaded" not in st.session_state):
+        st.session_state["loaded"] = False
+
+    if (st.session_state["loaded"] is False):
+        wake_api()
+        st.session_state["loaded"] = True
+
+
+def wake_api():
+    """API called to wake server"""
+
+    url = PREDICT_URL
+    with st.spinner("loading"):
+        requests.post(url, timeout=60).json()
+        time.sleep(5)
+
+
 def call_api():
     """API called to predict price"""
     url = PREDICT_URL+"/predict"
@@ -131,6 +150,7 @@ def form_area():
 
 
 def main():
+    initial_wake()
     st.title("App", text_alignment="center")
     with st.container(vertical_alignment="center"):
         col1, col2, col3 = st.columns([1, 1, 1])
