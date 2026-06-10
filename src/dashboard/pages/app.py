@@ -151,10 +151,22 @@ def form_area():
 
 def main():
     initial_wake()
-    st.title("App", text_alignment="center")
+
     with st.container(vertical_alignment="center"):
         col1, col2, col3 = st.columns([1, 1, 1])
         with col2:
+            with st.container(vertical_alignment="center"):
+                col_title, empty_col,  github_col, docs_col = st.columns([
+                                                                         1, 2, 1, 1], vertical_alignment="center")
+                with col_title:
+                    st.title("App", text_alignment="left")
+                with github_col:
+                    st.link_button(
+                        url="https://github.com/aswathygopan235/xai_drilling_porfolio_17", label="Github", type="primary")
+                with docs_col:
+                    st.link_button(url=DOCS_URL+"/docs",
+                                   label="Docs", type="primary")
+
             form_area()
 
 
