@@ -156,8 +156,8 @@ def main():
         col1, col2, col3 = st.columns([1, 1, 1])
         with col2:
             with st.container(vertical_alignment="center"):
-                col_title, empty_col,  github_col, docs_col =
-                st.columns([1, 2, 1, 1], vertical_alignment="center")
+                col_title, empty_col,  github_col, docs_col = st.columns(
+                    [1, 2, 1, 1], vertical_alignment="center")
                 with col_title:
                     st.title("App", text_alignment="left")
                 with github_col:
