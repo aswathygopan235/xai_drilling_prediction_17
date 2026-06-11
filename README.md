@@ -14,7 +14,7 @@
 
 ## Introduction
 
-This synthetic dataset simulates the drilling process and the failures modes associated with it. There are 20,000 records with 10 features associated with each datapoints. It records the parameters of the drilling procees and whether the process resulted in failure and the category of failure that occured.
+This synthetic dataset simulates the drilling process and the failures modes associated with it. There are 20,000 records with 10 features associated with each datapoints. It records the parameters of the drilling procees and whether the process resulted in failure and the category of failure that occurred.
 
 ### Dataset fields
 
@@ -38,7 +38,7 @@ This synthetic dataset simulates the drilling process and the failures modes ass
 
 - **Main failure**: This is a binary feature that indicates if any significant failure on the drill bit occurred during the drilling process. A value of 1 flags a drilling process that encountered issues, which in this case is true when any of the subgroup failure modes are 1, while 0 indicates a successful drilling operation without any major failures.
 
-In case a main failure occurs ie flag value is 1, there is a subcategory of failures which record what kind of failure occured. Multiple catergories can occur at once for each process.
+In case a main failure occurs ie flag value is 1, there is a subcategory of failures which record what kind of failure occurred. Multiple categories can occur at once for each process.
 
 - **Build-up edge failure (215x)**: Represented as a binary feature, a build-up edge failure indicates the occurrence of material accumulation on the cutting edge of the drill bit due to a combination of low cutting speeds and insufficient cooling. A value of 1 signifies the presence of this failure mode, while 0 denotes its absence.
 
@@ -50,7 +50,7 @@ In case a main failure occurs ie flag value is 1, there is a subcategory of fail
 
 ## Model
 
-This is identified as a classification problem since we are to determine whether a failure occured and if so what category this failure belongs to.
+This is identified as a classification problem since we are to determine whether a failure occurred and if so what category this failure belongs to.
 
 #### Algorithm
 
@@ -66,13 +66,25 @@ The *material* and *drill_bit_type* are categorical value which is encoded using
 
 ##### Outputs
 
-*main_failure* is binary flag which indicates if any type of failure occured while *bef,cef,fwf,* and *wdf* denote what kind of failure occured. 
+*main_failure* is binary flag which indicates if any type of failure occurred while *bef,cef,fwf,* and *wdf* denote what kind of failure occurred. 
 
-So a new category called *failure_cat* is created by combining *bef,cef,fwf,* and *wdf* so  multiple failure conditions can be predicted by single model.
+The model has 5 output *main_failure,bef,cef,fwf,* and *wdf*. Every label is binary.
 
-*faliure_cat* is encoded by [LabelEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) which map n result categories into *n-1*  classes.
+##### Pipeline
 
-The table of output after label encoding
+A pipeline preprocesses the data so it can be used by the model
+
+First pipeline stage encoded the categorical columns drill_bit_type and the material using [OneHotEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html). The rest of the fields is pass through. The estimator the pipeline is [Random forest classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+
+<!-- [Click here to view detailed Pipeline setup](./fig.html) -->
+
+## Analysis
+
+
+For the purpose of SHAP analysis, the explainer analyses has 5 labels *2 possibilities (either 0 or 1). For example, it returns the logit or probability of the *main_failure* being 0 and another value of probability/logit of it being 1.
+
+
+The table of each class of SHAP analysis class
 
 | failure        | failure_cat(output_label) |
 | -------------- | ------------------------- |
@@ -86,16 +98,6 @@ The table of output after label encoding
 | fwf_1          | 7                         |
 | ccf_0          | 8                         |
 | ccf_1          | 9                         |
-
-##### Pipeline
-
-A pipeline preprocesses the data so it can be used by the model
-
-First pipeline stage encoded the categorical columns drill_bit_type and the material using [OneHotEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html). The rest of the fields is pass through. The estimator the pipeline is [Random forest classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
-
-<!-- [Click here to view detailed Pipeline setup](./fig.html) -->
-
-## Analysis
 
 ###### SHAP influence of each feature on the failure category
 
@@ -143,7 +145,7 @@ This is  a a sample row with ID *11295* after encoder have been applied
 
 A ccf failure has occurred
 
-The sample SHAP waterfall figure for true value of ccf was caluclated is a s follows
+The sample SHAP waterfall figure for true value of ccf was calculated is a s follows
  ![SHAP sample figure](./assets/images/shap_waterfall.png)
 
 > Analysing this particular instant where the drilling process failed, *feed_rate* had the highest effect along with *cooling*. So insufficient cooling along with wrong feed rate must have caused this failure
